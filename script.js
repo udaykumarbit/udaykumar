@@ -217,9 +217,13 @@ Reading, Traveling, Music, Carrom, Cricket`;
         const blob = new Blob([resumeContent], { type: 'text/plain;charset=utf-8' });
         const url = URL.createObjectURL(blob);
         const link = document.createElement('a');
-        link.href = url;
-        link.download = 'UDAYKUMAR.pdf';
+        link.href = 'https://raw.githubusercontent.com/udaykumarbit/udaykumar/refs/heads/main/UDAYKUMAR.pdf';
+        link.download = 'UDAYKUMAR.pdf'; // Optional, triggers download instead of opening
         link.style.display = 'none';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+
 
         document.body.appendChild(link);
         link.click();
