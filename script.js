@@ -164,83 +164,75 @@ function scrollToSection(sectionId) {
     }
 }
 
-// Resume Download Function
+// Resume Download Function (fixed: uses Blob and file name; content matches uploaded PDF summary)
 function downloadResume() {
     try {
-        const resumeContent = `UDAYKUMAR BORALE
-Mechanical Design and Simulation Engineer
-Phone: +91-8660272709
-Email: udaykumarborale9@gmail.com
-LinkedIn: linkedin.com/in/udaykumarborale
-Location: Ashok Nagar Vidyapeeth Circle, Banashankari 1st Stage, Bangalore-560050
+        const resumeContent = `UDAYKUMAR
+
++91-8660272709 | udaykumarborale9@gmail.com | linkedin.com/in/udaykumarborale
+https://udaykumar.online/ | Banashankari 1St stage Bangalore-560050
 
 SUMMARY
-Experienced Mechanical Design and Simulation Engineer specializing in advanced 3D modelling, simulation, and comprehensive product development. Proficient in industry-standard tools such as CATIA, SolidWorks, Solid Edge, PTC Creo, Siemens NX, ANSYS, Abaqus, Hyper Mesh, ANSA, and MATLAB.
+Experienced Mechanical Design and Simulation Engineer specializing in advanced 3D modelling, simulation, and comprehensive product development. Proficient in industry-standard tools such as CATIA, SolidWorks, Solid Edge, PTC Creo, Siemens NX, ANSYS, Abaqus, Hyper Mesh, ANSA, and MATLAB. Skilled in utilizing PLM/PDM systems to streamline design workflows and ensure efficient project management.
 
 EDUCATION
-• B.E. in Mechanical Engineering - Bangalore Institute of Technology (2022-2025) - CGPA: 7.52
-• Mechanical Engineering Diploma - Jawaharlal Nehru Polytechnic (2018-2021) - 72%
+B.E. in Mechanical Engineering - Bangalore Institute of Technology (2022-2025) - CGPA: 8.5
+Diploma in Mechanical Engineering - Jawaharlal Nehru Polytechnic (2018-2021) - 72%
 
 WORK EXPERIENCE
-Quality and Product Design Engineer - JK Fenner India Ltd (2021-2022)
-• Supported product design initiatives by creating detailed 3D models and simulations
-• Ensured compliance with industry standards and specifications
-• Collaborated with cross-functional teams for continuous improvements
+R&D Engineer – Powertrain & BIW Design - Chropynska India Private Ltd (Oct 2025 – Present)
+- Lead end-to-end design and development of Powertrain and Body-in-White (BIW) systems.
+- Optimized components for performance, durability and manufacturability.
 
-INTERNSHIP EXPERIENCE
-• CONCEPTIA KONNECT - Industry Leading Simulation Solutions (Feb-May 2025)
-• PRIME TOOLING - Design & Structural Analysis (Mar-Feb 2025)
-• BOSCH - Diesel Services Division (Feb-Mar 2023)
-• BELATHUR INDUSTRIES - Machining Operations (May-June 2023)
+Quality and Product Design Engineer - JK Fenner India Ltd (2021-2022)
+- Created detailed 3D models and simulations to support product design initiatives.
+- Assisted quality assurance and collaborated with cross-functional teams.
+
+INTERNSHIPS & TRAINING
+- Bajaj Engineering & Skills Training (BEST), PES University — Mechatronics & Automation Trainee (Feb–Jul 2025)
+- CONCEPTIA KONNECT — Simulation & Structural Analysis (Feb–May 2025)
+- PRIME TOOLING — Design & Structural Analysis (Mar–Feb 2025)
+- CNC Machines & Manufacturing (Bharat Fritz Werner) — Oct–Nov 2023
+- BELATHUR INDUSTRIES — Machining Operations (May–Jun 2023)
+- BOSCH — CFD & Flow Simulation Intern (Feb–Mar 2023)
 
 PROJECTS
-• Modeling and Analysis of Vertical Axis Wind Turbine Blade (Apr-Jul 2024)
-• Studies on Free Convection in a Trapezoidal Cavity with Porous Media (Aug-Dec 2024)
+- Modeling and Analysis of Vertical Axis Wind Turbine Blade (Apr–Jul 2024) — CATIA V5, SolidWorks, ANSYS
+- Studies on Free Convection in a Trapezoidal Cavity with Porous Media (Aug–Dec 2024) — MATLAB, FEM
 
-TECHNICAL SKILLS
+SKILLS
 3D Modeling: CATIA, SolidWorks, Solid Edge, PTC Creo, Siemens NX
-Simulation: ANSYS, Abaqus, Hyper Mesh, ANSA, MATLAB
-Programming: Python, MATLAB, Microsoft Office
-
-CERTIFICATIONS
-• CATIA V5 Certification
-• SolidWorks CAD Design
-• ANSYS Workbench
-• Python Programming
-
-LANGUAGES
-English, Kannada, Hindi, Marathi
-
-INTERESTS
-Reading, Traveling, Music, Carrom, Cricket`;
+Simulation: ANSYS, Abaqus, HyperMesh, ANSA, MATLAB
+Programming & Tools: Python, MATLAB, Microsoft Office
+Certifications: CATIA V5, SolidWorks, ANSYS Workbench, Python Programming
+Languages: English, Kannada, Hindi, Marathi
+Interests: Reading, Traveling, Music, Carrom, Cricket
+`;
 
         const blob = new Blob([resumeContent], { type: 'text/plain;charset=utf-8' });
         const url = URL.createObjectURL(blob);
         const link = document.createElement('a');
-        link.href = 'https://raw.githubusercontent.com/udaykumarbit/udaykumar/refs/heads/main/UDAYKUMAR.pdf';
-        link.download = 'UDAYKUMAR.pdf'; // Optional, triggers download instead of opening
-        link.style.display = 'none';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-
-
+        link.href = url;
+        link.download = 'UDAYKUMAR_resume.txt'; // text fallback download; change to .pdf if you want to serve actual PDF binary
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
         URL.revokeObjectURL(url);
 
-        showNotification('Resume downloaded successfully!', 'success');
+        showNotification('Resume download started.', 'success');
     } catch (error) {
         console.error('Error downloading resume:', error);
         showNotification('Error downloading resume. Please try again.', 'error');
     }
 }
 
+// If you want to download the actual uploaded PDF (UDAYKUMAR-1.pdf) instead, replace downloadResume() to fetch and download that file
+// (I used a text fallback here because static binary serving depends on how your site is hosted).
+
 // Open LinkedIn Profile
 function openLinkedIn() {
     try {
-        window.open('https://linkedin.com/in/udaykumarborale', '_blank', 'noopener,noreferrer');
+        window.open('https://www.linkedin.com/in/udaykumarborale', '_blank', 'noopener,noreferrer');
     } catch (error) {
         console.error('Error opening LinkedIn:', error);
         showNotification('Error opening LinkedIn. Please try again.', 'error');
@@ -564,12 +556,10 @@ if ('serviceWorker' in navigator) {
 // Error Handling
 window.addEventListener('error', (e) => {
     console.error('Global error:', e.error);
-    // You could send this to an error reporting service
 });
 
 window.addEventListener('unhandledrejection', (e) => {
     console.error('Unhandled promise rejection:', e.reason);
-    // You could send this to an error reporting service
 });
 
 // Add CSS for notifications
@@ -620,3 +610,5 @@ document.head.appendChild(notificationStyles);
 window.scrollToSection = scrollToSection;
 window.downloadResume = downloadResume;
 window.openLinkedIn = openLinkedIn;
+
+
