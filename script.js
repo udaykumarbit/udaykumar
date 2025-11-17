@@ -167,7 +167,24 @@ function scrollToSection(sectionId) {
 // Resume Download Function (fixed: uses Blob and file name; content matches uploaded PDF summary)
 function downloadResume() {
     try {
-        const resumeContent = `UDAYKUMAR
+        const pdfPath = 'UDAYKUMAR-1.pdf'; // exact filename you provided
+
+        const link = document.createElement('a');
+        link.href = pdfPath;
+        link.download = 'UDAYKUMAR.pdf'; 
+        link.style.display = 'none';
+
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+
+        showNotification('Resume download started!', 'success');
+    } catch (error) {
+        console.error('Error downloading resume:', error);
+        showNotification('Error downloading resume. Please try again.', 'error');
+    }
+}
+
 
 +91-8660272709 | udaykumarborale9@gmail.com | linkedin.com/in/udaykumarborale
 https://udaykumar.online/ | Banashankari 1St stage Bangalore-560050
@@ -610,5 +627,6 @@ document.head.appendChild(notificationStyles);
 window.scrollToSection = scrollToSection;
 window.downloadResume = downloadResume;
 window.openLinkedIn = openLinkedIn;
+
 
 
